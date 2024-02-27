@@ -8,11 +8,12 @@ on:
 
 jobs:
   Hoolah:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4.1.1
+    uses: ./.github/workflows/set-common-env.yml
+    # runs-on: ubuntu-latest
+    # steps:
+    # - name: Checkout Repository
+    #   uses: actions/checkout@v4.1.1
     
-    - name: testtest
-    # Check if workflow call runs properly
-      uses: ./.github/workflows/set-common-env.yml
+    # - name: testtest
+    # # Check if workflow call runs properly
+    #   uses: ./.github/workflows/set-common-env.yml
