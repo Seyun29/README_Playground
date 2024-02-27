@@ -9,7 +9,8 @@ jobs:
     steps:
       - name: Set SERVICE_NAME variable
         run: echo "SERVICE_NAME=$(echo ${{ github.repository }} | cut -d'-' -f5- | sed 's/-api//g')" >> $GITHUB_ENV
-
+      - name: see directory
+        run: ls -a
       - name: Detect repository language
         run: |
           if [ -e package.json ]; then
