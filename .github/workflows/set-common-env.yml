@@ -1,0 +1,23 @@
+name: set GITHUB_ENV
+description: detect repository language and set CODE_LANGUAGE, SERVICE_NAME in GITHUB_ENV
+
+on:
+  workflow_call:
+
+runs:
+  steps:
+    - name: Set SERVICE_NAME variable
+      run: echo "SERVICE_NAME=$(echo ${{ github.repository }} | cut -d'-' -f5- | sed 's/-api//g')" >> $GITHUB_ENV
+
+    - name: Detect repository language
+      run: |
+        if [ -e package.json ]; then
+          echo "CODE_LANGUAGE=nodejs" >> $GITHUB_ENV
+        elif [ -e go.mod ]; then
+          echo "CODE_LANGUAGE=golang" >> $GITHUB_ENV
+        else
+          echo "Error : Unknown environment, this should never happen"
+        fi
+
+    - name: Check if completed properly
+      run: echo {{$GITHUB_ENV.CODE_LANGUAGE}}, {{$GITHUB_ENV.SERVICE_NAME}}
