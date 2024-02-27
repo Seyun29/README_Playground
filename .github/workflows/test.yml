@@ -8,7 +8,7 @@ on:
 
 jobs:
   Hoolah:
-    runs-on: ubuntu-latetest
+    runs-on: ubuntu-latest
     steps:
     - name: testtest
     # Check if workflow call runs properly
