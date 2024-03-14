@@ -58,7 +58,6 @@ on:
 jobs:
   print-tag:
     runs-on: ubuntu-latest
-    if:  ${{ inputs.print_tags }} 
     steps:
       - name: Check if region input is provided
         run: |
