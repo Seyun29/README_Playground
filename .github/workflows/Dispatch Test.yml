@@ -15,18 +15,20 @@ on:
       region:
         type: choice
         required: false
-        description: "Choose Region for production\n(for MultiRegion Release only)"
+        description: Choose Region for production (skip if not deploying ECS-MultiRegion)
         options:
           - Tokyo
           - Seoul
           - Oregon
           - Frankfurt
+          - Skip
+        default: Skip
       
       #in case of releasing lambda-billing
       function:
         type: choice
         required: false
-        description: Choose Function to deploy (for Releasing Lambda only)
+        description: Choose Function to deploy (skip if not releasing Lambda)
         options:
             - all
             - appleIapWebhook
@@ -50,6 +52,8 @@ on:
             - stripeWebhook
             - updateCustomSubscription
             - updateSubscription
+            - Skip
+        default: Skip
 
 jobs:
   print-tag:
