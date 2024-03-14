@@ -71,4 +71,4 @@ jobs:
       - name: condition test
         run: |     
           echo "RESULT=${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}" >> $GITHUB_ENV
-          echo "${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}
+          echo "${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}"
