@@ -68,3 +68,9 @@ jobs:
             echo "Region input provided: ${{ github.event.inputs.region }}"
           fi
         shell: bash
+
+      - name: condition test
+        run: |
+          echo "failure : ${{ failure() }}"
+          echo "success : ${{ success() }}"
+          echo "RESULT=$( ${{ github.event_name == 'push' ? 'PUSH_EVENT' : 'OTHER_EVENT' }} )" >> $GITHUB_ENV
