@@ -3,29 +3,64 @@ name: Dispatch Test
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
+      env:
+          type: choice
+          description: select deploy environment
+          required: true
+          options:
+            - development
+            - staging
+            - production
+      #in case of deploying to multiregion
+      region:
         type: choice
-        options:
-          - info
-          - warning
-          - debug
-      print_tags:
-        description: 'True to print to STDOUT'
-        required: true
-        type: boolean
-      tags:
-        description: 'Test scenario tags'
         required: false
-        type: string
-        default: abcd
+        description: Choose Region for production (for MultiRegion Release only)
+        options:
+          - Tokyo
+          - Seoul
+          - Oregon
+          - Frankfurt
+      
+      #in case of releasing lambda-billing
+      function:
+        type: choice
+        required: false
+        description: Choose Function to deploy (for Releasing Lambda only)
+        options:
+            - all
+            - appleIapWebhook
+            - cancelSubscription
+            - createCustomSubscription
+            - createSession
+            - createSubscription
+            - createSubscriptionCouponOnly
+            - deleteCouponServer
+            - deleteCustomer
+            - getCoupon
+            - getCouponServer
+            - getInvoices
+            - getSession
+            - getSubscription
+            - getUpcomingInvoice
+            - issueCouponServer
+            - pollingAppleIapReceipt
+            - pollingCustomSubscription
+            - resumeSubscription
+            - stripeWebhook
+            - updateCustomSubscription
+            - updateSubscription
 
 jobs:
   print-tag:
     runs-on: ubuntu-latest
     if:  ${{ inputs.print_tags }} 
     steps:
-      - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }} 
+      - name: Check if region input is provided
+        run: |
+          if [[ "${{ github.event.inputs.region }}" == "null" ]]; then
+            echo "Region input not provided"
+          else
+            echo "Region input provided: ${{ github.event.inputs.region }}"
+          fi
+        shell: bash
