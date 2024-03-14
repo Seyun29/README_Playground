@@ -15,7 +15,7 @@ on:
       region:
         type: choice
         required: false
-        description: Choose Region for production (for MultiRegion Release only)
+        description: "Choose Region for production\n(for MultiRegion Release only)"
         options:
           - Tokyo
           - Seoul
