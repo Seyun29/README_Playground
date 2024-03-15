@@ -51,7 +51,7 @@ jobs:
       - name: test composite action with inputs
         uses: ./.github/actions/test/slack-test/
         with:
-          IS_SUCCESS: ${{ contains(join(steps.*.outcome, ','), 'success') }}
+          IS_SUCCESS: ${{ !contains(join(steps.*.outcome, ','), 'success') }}
           PERSONAL_SLACK_WEBHOOK: ${{ secrets.PERSONAL_SLACK_WEBHOOK }}
           # TITLE: >-
           #   ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
