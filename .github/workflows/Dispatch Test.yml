@@ -58,7 +58,15 @@ jobs:
             || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
-      #multiline 테스트
+      - name: test Overwriting environments
+        run: |
+          echo "${{ env.INPUT_REGION }}"
+          echo "INPUT_REGION=overwrite1" >> $GITHUB_ENV
+          echo "${{ env.INPUT_REGION }}"
+          echo "INPUT_REGION=overwrite2" > $GITHUB_ENV
+          echo "${{ env.INPUT_REGION }}"
+
+      #multiline 테스트 - O
       #환경변수 덮어쓰기 테스트
       #슬랙 composite action 테스트
       #build 테스트 (policy, cloud-transfer, fe-b2b)
