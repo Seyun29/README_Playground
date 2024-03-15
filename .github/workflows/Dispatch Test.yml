@@ -45,7 +45,15 @@ jobs:
         run: |     
           echo "RESULT=${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}" >> $GITHUB_ENV
           echo "${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}"
-
-      - name: ternary test
+          
+      - name: set Message
         run: |
-          echo "${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in '${{ env.INPUT_ENV }} || 'DEPLOYMENT SUCCESS in '${{ env.INPUT_ENV }}' - '${{ env.INPUT_REGION }} }}"
+          echo "MESSAGE=$( ${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }}' || 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }} - ${{ env.INPUT_REGION }}' }} )" >> $GITHUB_ENV
+
+      - name: show Message
+        run: |
+          echo "Message : ${{ env.MESSAGE }}"
+          
+      - name: set Message String to Show
+        run: |
+          echo "$(${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }}' || 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }} - ${{ env.INPUT_REGION }}' }})"
