@@ -34,13 +34,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout Repository
-        id: checkOut
+        id: checkout
         uses: actions/checkout@v4.1.1
       #test1 - /abcd -> 테스트 (skip) : O
       #test2 - /READ & Skip -> exit 1 => 후속 step실행여부 확인 (안되면 always 사용해야됨)
       #test3 - /REAd & valid region -> normal case
       - name: Check Region Option for MultiRegion Deployment
-        id: check
+        id: checkRegion
         shell: bash
         run: |
           if [ "${{ !contains( github.repository, '/READ' ) }}" = "true" ]; then
@@ -51,19 +51,8 @@ jobs:
           else
             echo "start MultiRegion Deployment"
           fi
-      
-      - name: print region
-        id: print
-        if: ${{ !always() }}
-        run: |
-          echo "${{ env.INPUT_REGION }}"
 
-      - name: set Message String to Show
-        id: set
-        run: |
-          echo "${{ contains( github.repository, '/rakuten-drive-cloud-transfer' ) && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
-
-      #assign ID to necessary steps to decide whether the job is success or fail
+      #assign ID to 'necessary' steps to decide whether the job is success or fail
       - name: Notify Slack
         if: always()
         uses: ./.github/actions/test/slack-test/
