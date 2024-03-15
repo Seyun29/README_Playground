@@ -14,7 +14,7 @@ on:
       #in case of deploying to multiregion
       region:
         type: choice
-        required: false
+        required: true
         description: Choose Region for production (only for ECS-MultiRegion deployment)
         options:
           - Tokyo
@@ -23,40 +23,13 @@ on:
           - Frankfurt
           - Skip (Not deploying to ECS-MultiRegion)
         default: Skip (Not deploying to ECS-MultiRegion)
-      
-      #in case of releasing lambda-billing
-      function:
-        type: choice
-        required: false
-        description: Choose Function to deploy (only for releasing Lambda)
-        options:
-            - all
-            - appleIapWebhook
-            - cancelSubscription
-            - createCustomSubscription
-            - createSession
-            - createSubscription
-            - createSubscriptionCouponOnly
-            - deleteCouponServer
-            - deleteCustomer
-            - getCoupon
-            - getCouponServer
-            - getInvoices
-            - getSession
-            - getSubscription
-            - getUpcomingInvoice
-            - issueCouponServer
-            - pollingAppleIapReceipt
-            - pollingCustomSubscription
-            - resumeSubscription
-            - stripeWebhook
-            - updateCustomSubscription
-            - updateSubscription
-            - Skip (Not releasing Lambda)
-        default: Skip (Not releasing Lambda)
 
+env:
+  INPUT_ENV: ${{ github.event.inputs.env }}
+  INPUT_REGION: ${{ github.event.inputs.region }}
+      
 jobs:
-  print-tag:
+  TESTS:
     runs-on: ubuntu-latest
     steps:
       - name: Check if region input is provided
@@ -72,3 +45,7 @@ jobs:
         run: |     
           echo "RESULT=${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}" >> $GITHUB_ENV
           echo "${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}"
+
+      - name: ternary test
+        run: |
+          echo "${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }}' || 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }} - ${{ env.INPUT_REGION }}' }}"
