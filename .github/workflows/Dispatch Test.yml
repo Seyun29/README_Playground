@@ -55,4 +55,4 @@ jobs:
       #     echo "Message : ${{ env.MESSAGE }}"
       - name: set Message String to Show
         run: |
-          echo "${{ contains( github.repository, "/READ" ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}"
+          echo "${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}"
