@@ -36,6 +36,21 @@ jobs:
       - name: checkout Repository
         id: checkOut
         uses: actions/checkout@v4.1.1
+      #test1 - /abcd -> 테스트 (skip)
+      #test2 - /READ & Skip -> exit 1 => 후속 step실행여부 확인 (안되면 always 사용해야됨)
+      #test3 - /REAd & valid region -> normal case
+      - name: Check Region Option for MultiRegion Deployment
+        id: check
+        shell: bash
+        run: |
+          if [ ${{ !contains( github.repository, "/abcd" ) }}]; then
+            echo "Not a MultiRegion Deployment, Skipping this step"
+          elif [ "${{ env.INPUT_REGION }}" = "Skip (Not deploying to ECS-MultiRegion)" ]; then
+            echo "Input Region is not given, Please select a region for MultiRegion Deployment and try again"
+            exit 1
+          else
+            echo "start MultiRegion Deployment"
+          fi
       
       - name: print region
         id: print
@@ -54,17 +69,20 @@ jobs:
         with:
           IS_SUCCESS: ${{ contains(join(steps.*.outcome, ','), 'success') }}
           PERSONAL_SLACK_WEBHOOK: ${{ secrets.PERSONAL_SLACK_WEBHOOK }}
-          # TITLE: >-
-          #   ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
-          #   && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) 
-          #   || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
-          TITLE_ONSUCCESS: SUCCESS!
-          TITLE_ONFAIL: FAIL!
+          TITLE_ONSUCCESS: >-
+            ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
+            && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) 
+            || format('DEPLOYMENT SUCCESS in {1} - {2}', env.INPUT_ENV, env.INPUT_REGION) }}
+          TITLE_ONFAIL: >-
+            ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
+            && format('DEPLOYMENT FAILED in {0}', env.INPUT_ENV) 
+            || format('DEPLOYMENT FAILED in {1} - {2}', env.INPUT_ENV, env.INPUT_REGION) }}
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
       #multiline 테스트 - O 
       #환경변수 덮어쓰기 테스트 - O (Okay with >>)
-      #슬랙 composite action 테스트
+      #슬랙 composite action 테스트 - O
+      #Exit-1시에도 슬랙 failure trigger되는지 확인, ECS-multi & Skip일때 Exit-1.
       #변경사항 적용하기
       #build 테스트 (policy, cloud-transfer, fe-b2b)
       #release, ci 주석 처리 후 테스트 (policy, cloud-transfer, fe-b2b)
