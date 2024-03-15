@@ -48,4 +48,4 @@ jobs:
 
       - name: ternary test
         run: |
-          echo "${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }}' || 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }} - ${{ env.INPUT_REGION }}' }}"
+          echo "${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in '${{ env.INPUT_ENV }} || 'DEPLOYMENT SUCCESS in '${{ env.INPUT_ENV }}' - '${{ env.INPUT_REGION }} }}"
