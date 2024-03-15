@@ -32,27 +32,36 @@ jobs:
   TESTS:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if region input is provided
-        run: |
-          if [[ "${{ github.event.inputs.region }}" == "null" ]]; then
-            echo "Region input not provided"
-          else
-            echo "Region input provided: ${{ github.event.inputs.region }}"
-          fi
-        shell: bash
-
-      - name: condition test
-        run: |     
-          echo "RESULT=${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}" >> $GITHUB_ENV
-          echo "${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}"
+      - name: checkout Repository
+        uses: actions/checkout@v4.1.1
+        
+      # - name: test composite action with inputs
+      #   uses: ./.github/actions/test/test/
+      #   with:
+      #     IS_SUCCESS: ${{ success() }}
+      #     WEBHOOK: 'hello'
+      #     TITLE: ${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}
+      #     MESSAGE: ${{ github.repository }}
           
-      # - name: set Message
-      #   run: |
-      #     echo "MESSAGE=${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }}' || 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }} - ${{ env.INPUT_REGION }}' }}" >> $GITHUB_ENV
-
-      # - name: show Message
-      #   run: |
-      #     echo "Message : ${{ env.MESSAGE }}"
       - name: set Message String to Show
         run: |
           echo "${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}"
+
+      - name: print SUCCESS()
+        run: |
+          echo "${{ success() }}"
+    # steps:
+    #   - name: Check if region input is provided
+    #     run: |
+    #       if [[ "${{ github.event.inputs.region }}" == "null" ]]; then
+    #         echo "Region input not provided"
+    #       else
+    #         echo "Region input provided: ${{ github.event.inputs.region }}"
+    #       fi
+    #     shell: bash
+
+    #   - name: condition test
+    #     run: |     
+    #       echo "RESULT=${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}" >> $GITHUB_ENV
+    #       echo "${{ github.event_name == 'push' && 'PUSH_EVENT' || 'OTHER_EVENT' }}"
+        
