@@ -43,7 +43,7 @@ jobs:
         id: check
         shell: bash
         run: |
-          if [ ${{ !contains( github.repository, "/abcd" ) }}]; then
+          if [ "${{ !contains( github.repository, '/abcd' ) }}" = "true" ]; then
             echo "Not a MultiRegion Deployment, Skipping this step"
           elif [ "${{ env.INPUT_REGION }}" = "Skip (Not deploying to ECS-MultiRegion)" ]; then
             echo "Input Region is not given, Please select a region for MultiRegion Deployment and try again"
