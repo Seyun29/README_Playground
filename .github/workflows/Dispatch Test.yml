@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v4.1.1
       
       - name: print region
-        # id: print
+        id: print
         if: ${{ always() }}
         run: |
           echo "${{ env.INPUT_REGION }}"
@@ -54,7 +54,7 @@ jobs:
           # OUTPUTS: ${{ join(steps.*.outputs.*, '\n') }}
           WEBHOOK: 'hello'
           TITLE: ${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}
-          MESSAGE: ${{ steps.set.outcome }}
+          MESSAGE: ${{ steps.*.outcome }}
 
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@v2
