@@ -1,4 +1,4 @@
-name: Composite Test
+name: Notify Slack
 
 inputs:
   PERSONAL_SLACK_WEBHOOK:
@@ -23,7 +23,7 @@ inputs:
 runs:
   using: "composite"
   steps:    
-    - name: Notify to Slack (Test)
+    - name: Notify to Slack
       if: always()
       uses: rtCamp/action-slack-notify@v2.2.0
       env:

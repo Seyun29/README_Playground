@@ -64,7 +64,8 @@ jobs:
           echo "${{ contains( github.repository, '/rakuten-drive-cloud-transfer' ) && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
 
       #assign ID to necessary steps to decide whether the job is success or fail
-      - name: test composite action with inputs
+      - name: Notify Slack
+        if: always()
         uses: ./.github/actions/test/slack-test/
         with:
           IS_SUCCESS: ${{ contains(join(steps.*.outcome, ','), 'success') }}
