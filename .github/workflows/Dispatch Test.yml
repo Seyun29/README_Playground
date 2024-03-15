@@ -72,11 +72,11 @@ jobs:
           TITLE_ONSUCCESS: >-
             ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
             && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) 
-            || format('DEPLOYMENT SUCCESS in {1} - {2}', env.INPUT_ENV, env.INPUT_REGION) }}
+            || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}
           TITLE_ONFAIL: >-
             ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
             && format('DEPLOYMENT FAILED in {0}', env.INPUT_ENV) 
-            || format('DEPLOYMENT FAILED in {1} - {2}', env.INPUT_ENV, env.INPUT_REGION) }}
+            || format('DEPLOYMENT FAILED in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
       #multiline 테스트 - O 
