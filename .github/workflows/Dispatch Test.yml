@@ -47,14 +47,19 @@ jobs:
         id: set
         run: |
           echo "${{ !contains( github.repository, '/READ' ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}"
-        
+      
       - name: test composite action with inputs
         uses: ./.github/actions/test/test/
         with:
-          OUTPUTS: ${{ join(steps.*.outputs.*, '\n') }}
+          # OUTPUTS: ${{ join(steps.*.outputs.*, '\n') }}
           WEBHOOK: 'hello'
           TITLE: ${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}
           MESSAGE: ${{ github.repository }}
+
+      # - name: Slack Notification
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           
 
   

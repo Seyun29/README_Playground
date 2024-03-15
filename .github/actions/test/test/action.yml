@@ -1,8 +1,6 @@
 name: Composite Test
 
 inputs:
-  OUTPUTS:
-    description: hhh
   IS_SUCCESS: 
     description: success?
     required: false
@@ -19,10 +17,8 @@ runs:
     - name: Print Inputs
       shell: bash
       run: |
-        echo "${{ inputs.OUTPUTS }}"
         echo "${{ inputs.WEBHOOK }}"
         echo "${{ inputs.TITLE }}"
         echo "${{ inputs.MESSAGE }}"
-        echo ""
 
 
