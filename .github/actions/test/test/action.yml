@@ -8,7 +8,7 @@ inputs:
     description: webhook for slack notif.
   TITLE: 
     description: title of slack message to be sent
-  MESSAGE: ${{ github.repository }}
+  MESSAGE:
     description: body of slack message
 
 runs:
