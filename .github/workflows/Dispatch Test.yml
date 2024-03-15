@@ -36,14 +36,14 @@ jobs:
       - name: checkout Repository
         id: checkOut
         uses: actions/checkout@v4.1.1
-      #test1 - /abcd -> 테스트 (skip)
+      #test1 - /abcd -> 테스트 (skip) : O
       #test2 - /READ & Skip -> exit 1 => 후속 step실행여부 확인 (안되면 always 사용해야됨)
       #test3 - /REAd & valid region -> normal case
       - name: Check Region Option for MultiRegion Deployment
         id: check
         shell: bash
         run: |
-          if [ "${{ !contains( github.repository, '/abcd' ) }}" = "true" ]; then
+          if [ "${{ !contains( github.repository, '/READ' ) }}" = "true" ]; then
             echo "Not a MultiRegion Deployment, Skipping this step"
           elif [ "${{ env.INPUT_REGION }}" = "Skip (Not deploying to ECS-MultiRegion)" ]; then
             echo "Input Region is not given, Please select a region for MultiRegion Deployment and try again"
