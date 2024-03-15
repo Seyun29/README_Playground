@@ -54,7 +54,7 @@ jobs:
           # OUTPUTS: ${{ join(steps.*.outputs.*, '\n') }}
           WEBHOOK: 'hello'
           TITLE: ${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT SUCCESS in {0}', env.INPUT_ENV) || format('DEPLOYMENT SUCCESS in {0} - {1}', env.INPUT_ENV, env.INPUT_REGION) }}
-          MESSAGE: ${{ github.repository }}
+          MESSAGE: ${{ join(steps.*.outputs.*, '\n') }}
 
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@v2
