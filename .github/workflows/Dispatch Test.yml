@@ -51,7 +51,11 @@ jobs:
           else
             echo "start MultiRegion Deployment"
           fi
-
+      - name: check whether success
+        shell: bash
+        run: |
+          echo ${{ contains(join(steps.*.outcome, ','), 'success') }}
+          echo ${{ steps.checkRegion.outcome }}
       #assign ID to 'necessary' steps to decide whether the job is success or fail
       - name: Notify Slack
         if: always()
