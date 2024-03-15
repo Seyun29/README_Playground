@@ -1,0 +1,28 @@
+name: Composite Test
+
+inputs:
+  OUTPUTS:
+    description: hhh
+  IS_SUCCESS: 
+    description: success?
+    required: false
+  WEBHOOK: 
+    description: webhook for slack notif.
+  TITLE: 
+    description: title of slack message to be sent
+  MESSAGE: ${{ github.repository }}
+    description: body of slack message
+
+runs:
+  using: "composite"
+  steps:
+    - name: Print Inputs
+      shell: bash
+      run: |
+        echo "${{ inputs.OUTPUTS }}"
+        echo "${{ inputs.WEBHOOK }}"
+        echo "${{ inputs.TITLE }}"
+        echo "${{ inputs.MESSAGE }}"
+        echo ""
+
+
