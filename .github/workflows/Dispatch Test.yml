@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout Repository
-        # id: checkOut
+        id: checkOut
         uses: actions/checkout@v4.1.1
       
       - name: print region
@@ -46,7 +46,9 @@ jobs:
       - name: set Message String to Show
         id: set
         run: |
-          echo "${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
+          echo "${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT {0} in {1}', \
+          contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', \
+          contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
 
 
       - name: test composite action with inputs
