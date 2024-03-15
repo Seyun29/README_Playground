@@ -26,6 +26,7 @@ runs:
     - name: Print Inputs
       shell: bash
       run: |
+        echo: "${{ inputs.IS_SUCCESS }}"
         echo "${{ inputs.PERSONAL_SLACK_WEBHOOK }}"
         echo "${{ inputs.TITLE }}"
         echo "${{ inputs.MESSAGE }}"
