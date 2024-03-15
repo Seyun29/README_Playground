@@ -52,10 +52,10 @@ jobs:
         uses: ./.github/actions/test/slack-test/
         with:
           WEBHOOK: 'hello'
-          TITLE: |
-            "${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
+          TITLE: >
+            ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
             && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) 
-            || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
+            || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
       # - name: Slack Notification
