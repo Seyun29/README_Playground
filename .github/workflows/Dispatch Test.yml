@@ -57,7 +57,7 @@ jobs:
           #   ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
           #   && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) 
           #   || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
-          TITLE_ONSUCCESS: success_onsuccess
+          TITLE_ONSUCCESS: ${{ IS_SUCCESS && "success" || "fail" }}
           TITLE_ONFAIL: fail_onfail
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
