@@ -41,7 +41,7 @@ jobs:
         # id: print
         if: ${{ always() }}
         run: |
-          echo "${{ INPUT_REGION }}"
+          echo "${{ env.INPUT_REGION }}"
 
       - name: set Message String to Show
         id: set
