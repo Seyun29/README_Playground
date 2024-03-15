@@ -4,12 +4,13 @@ inputs:
   IS_SUCCESS: 
     description: success?
     required: false
-  WEBHOOK: 
-    description: webhook for slack notif.
   TITLE: 
     description: title of slack message to be sent
   MESSAGE:
     description: body of slack message
+  PERSONAL_SLACK_WEBHOOK:
+    description: slack webhook 
+    required: true
 
 runs:
   using: "composite"
@@ -17,8 +18,15 @@ runs:
     - name: Print Inputs
       shell: bash
       run: |
-        echo "${{ inputs.WEBHOOK }}"
+        echo "${{ inputs.PERSONAL_SLACK_WEBHOOK }}"
         echo "${{ inputs.TITLE }}"
         echo "${{ inputs.MESSAGE }}"
+    
+    - name: Notify to Slack (Test)
+      uses: rtCamp/action-slack-notify@v2.2.0
+      env:
+        SLACK_WEBHOOK: ${{ inputs.PERSONAL_SLACK_WEBHOOK }}
+        SLACK_TITLE: ${{ inputs.TITLE }}
+        SLACK_MESSAGE: '${{ github.repository }}'
 
 
