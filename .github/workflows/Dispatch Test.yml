@@ -61,23 +61,24 @@ jobs:
           TITLE_ONFAIL: FAIL!
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
-      - name: test Overwriting environments
-        run: |
-          echo "${{ env.INPUT_REGION }}"
-          echo "INPUT_REGION=overwrite1" >> $GITHUB_ENV
-          echo "INPUT_ENV=overwrite2" >> $GITHUB_ENV
-
-      - name: print env
-        run: |
-          echo "${{ env.INPUT_REGION }}"
-          echo "${{ env.INPUT_ENV }}"
-
       #multiline 테스트 - O 
-      #환경변수 덮어쓰기 테스트
+      #환경변수 덮어쓰기 테스트 - O (Okay with >>)
       #슬랙 composite action 테스트
       #변경사항 적용하기
       #build 테스트 (policy, cloud-transfer, fe-b2b)
       #release, ci 주석 처리 후 테스트 (policy, cloud-transfer, fe-b2b)
+
+
+      # - name: test Overwriting environments
+      #   run: |
+      #     echo "${{ env.INPUT_REGION }}"
+      #     echo "INPUT_REGION=overwrite1" >> $GITHUB_ENV
+      #     echo "INPUT_ENV=overwrite2" >> $GITHUB_ENV
+
+      # - name: print env
+      #   run: |
+      #     echo "${{ env.INPUT_REGION }}"
+      #     echo "${{ env.INPUT_ENV }}"
 
 
 

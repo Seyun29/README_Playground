@@ -27,8 +27,10 @@ runs:
       shell: bash
       run: |
         echo "${{ inputs.IS_SUCCESS }}"
-        echo "${{ inputs.IS_SUCCESS == "fail" }}"
-        echo "${{ inputs.IS_SUCCESS == "success" }}"
+        echo "${{ inputs.IS_SUCCESS == 'false' }}"
+        echo "${{ inputs.IS_SUCCESS == false }}"
+        echo "${{ inputs.IS_SUCCESS == 'true' }}"
+        echo "${{ inputs.IS_SUCCESS == true }}"
         echo "${{ inputs.PERSONAL_SLACK_WEBHOOK }}"
         echo "${{ inputs.TITLE }}"
         echo "${{ inputs.MESSAGE }}"
