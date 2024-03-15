@@ -45,7 +45,7 @@ jobs:
         run: |
           if [ "${{ !contains( github.repository, '/READ' ) }}" = "true" ]; then
             echo "Not a MultiRegion Deployment, Skipping this step"
-          elif [ "${{ env.INPUT_REGION }}" = "Skip (Not deploying to ECS-MultiRegion)" ]; then
+          elif [ "${{ env.INPUT_REGION }}" = "Skip" ]; then
             echo "Input Region is not given, Please select a region for MultiRegion Deployment and try again"
             exit 1
           else
