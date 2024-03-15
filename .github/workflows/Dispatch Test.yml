@@ -52,11 +52,19 @@ jobs:
         uses: ./.github/actions/test/slack-test/
         with:
           WEBHOOK: 'hello'
-          TITLE: >
+          TITLE: >-
             ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
             && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) 
             || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
+
+      #multiline 테스트
+      #환경변수 덮어쓰기 테스트
+      #슬랙 composite action 테스트
+      #build 테스트 (policy, cloud-transfer, fe-b2b)
+      #release, ci 주석 처리 후 테스트 (policy, cloud-transfer, fe-b2b)
+
+
 
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@v2
