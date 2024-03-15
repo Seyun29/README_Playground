@@ -61,7 +61,7 @@ jobs:
       - name: test Overwriting environments
         run: |
           echo "${{ env.INPUT_REGION }}"
-          echo "INPUT_REGION=overwrite1" >> $GITHUB_ENV
+          echo "INPUT_REGION=overwrite1" > $GITHUB_ENV
           echo "INPUT_ENV=overwrite2" >> $GITHUB_ENV
 
       - name: print env
