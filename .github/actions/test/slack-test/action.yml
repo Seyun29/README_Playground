@@ -1,16 +1,24 @@
 name: Composite Test
 
 inputs:
-  IS_SUCCESS: 
-    description: success?
-    required: false
-  TITLE: 
-    description: title of slack message to be sent
-  MESSAGE:
-    description: body of slack message
   PERSONAL_SLACK_WEBHOOK:
     description: slack webhook 
     required: true
+
+  IS_SUCCESS: 
+    description: success?
+    required: false
+
+  TITLE_ONSUCCESS: 
+    description: title of slack message to be sent on success
+    required: true
+
+  TITLE_ONFAIL:
+    description: title of slack message to be sent on failure
+    required: true
+
+  MESSAGE:
+    description: body of slack message
 
 runs:
   using: "composite"
@@ -26,7 +34,7 @@ runs:
       uses: rtCamp/action-slack-notify@v2.2.0
       env:
         SLACK_WEBHOOK: ${{ inputs.PERSONAL_SLACK_WEBHOOK }}
-        SLACK_TITLE: ${{ inputs.TITLE }}
+        SLACK_TITLE: ${{ inputs.IS_SUCCESS && inputs.TITLE_ONSUCCESS || inputs.TITLE_ONFAIL }}
         SLACK_MESSAGE: '${{ github.repository }}'
 
 

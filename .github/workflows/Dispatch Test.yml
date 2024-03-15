@@ -51,12 +51,14 @@ jobs:
       - name: test composite action with inputs
         uses: ./.github/actions/test/slack-test/
         with:
-          IS_SUCCESS: true
+          IS_SUCCESS: ${{ contains(join(steps.*.outcome, ','), 'success') }}
           PERSONAL_SLACK_WEBHOOK: ${{ secrets.PERSONAL_SLACK_WEBHOOK }}
-          TITLE: >-
-            ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
-            && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) 
-            || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
+          # TITLE: >-
+          #   ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
+          #   && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) 
+          #   || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
+          TITLE_ONSUCCESS: success_onsuccess
+          TITLE_ONFAIL: fail_onfail
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
       - name: test Overwriting environments
