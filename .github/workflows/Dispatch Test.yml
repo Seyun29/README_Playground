@@ -52,6 +52,7 @@ jobs:
             echo "start MultiRegion Deployment"
           fi
       - name: check whether success
+        if: always()
         shell: bash
         run: |
           echo ${{ contains(join(steps.*.outcome, ','), 'success') }}
@@ -77,6 +78,7 @@ jobs:
       #환경변수 덮어쓰기 테스트 - O (Okay with >>)
       #슬랙 composite action 테스트 - O
       #Exit-1시에도 슬랙 failure trigger되는지 확인, ECS-multi & Skip일때 Exit-1.
+      #success 적어도 한개 포함이 아니라, fail 한개 
       #변경사항 적용하기
       #build 테스트 (policy, cloud-transfer, fe-b2b)
       #release, ci 주석 처리 후 테스트 (policy, cloud-transfer, fe-b2b)
