@@ -51,18 +51,18 @@ jobs:
           else
             echo "start MultiRegion Deployment"
           fi
-      - name: check whether success
-        if: always()
-        shell: bash
-        run: |
-          echo ${{ contains(join(steps.*.outcome, ','), 'success') }}
-          echo ${{ steps.checkRegion.outcome }}
-      #assign ID to 'necessary' steps to decide whether the job is success or fail
+      # - name: check whether success
+      #   if: always()
+      #   shell: bash
+      #   run: |
+      #     echo ${{ !contains(join(steps.*.outcome, ','), 'failure') }}
+      #     echo ${{ steps.checkRegion.outcome }}
+      #assign ID to 'necessary' steps to decide whether the job is success or failure
       - name: Notify Slack
         if: always()
         uses: ./.github/actions/test/slack-test/
         with:
-          IS_SUCCESS: ${{ contains(join(steps.*.outcome, ','), 'success') }}
+          IS_SUCCESS: ${{ !contains(join(steps.*.outcome, ','), 'failure') }}
           PERSONAL_SLACK_WEBHOOK: ${{ secrets.PERSONAL_SLACK_WEBHOOK }}
           TITLE_ONSUCCESS: >-
             ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
