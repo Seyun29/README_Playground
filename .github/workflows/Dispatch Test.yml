@@ -48,7 +48,7 @@ jobs:
           
       - name: set Message
         run: |
-          echo "MESSAGE=$( ${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }}' || 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }} - ${{ env.INPUT_REGION }}' }} )" >> $GITHUB_ENV
+          echo "MESSAGE=${{ env.INPUT_REGION == 'Skip (Not deploying to ECS-MultiRegion)' && 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }}' || 'DEPLOYMENT SUCCESS in ${{ env.INPUT_ENV }} - ${{ env.INPUT_REGION }}' }}" >> $GITHUB_ENV
 
       - name: show Message
         run: |
