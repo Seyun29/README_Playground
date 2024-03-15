@@ -46,15 +46,16 @@ jobs:
       - name: set Message String to Show
         id: set
         run: |
-          echo "${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
-          echo "${{ join(steps.*.outcome, ',') }}"
+          echo "${{ contains( github.repository, '/rakuten-drive-cloud-transfer' ) && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
 
       - name: test composite action with inputs
-        uses: ./.github/actions/test/test/
+        uses: ./.github/actions/test/slack-test/
         with:
-          # OUTPUTS: ${{ join(steps.*.outputs.*, '\n') }}
           WEBHOOK: 'hello'
-          TITLE: ${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
+          TITLE: |
+            ${{ contains( github.repository, '/rakuten-drive-cloud-transfer' )
+            && format('DEPLOYMENT {0} in {1}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) 
+            || format('DEPLOYMENT {0} in {1} - {2}', contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}
           MESSAGE: ${{ contains(join(steps.*.outcome, ','), 'success') }}
 
       # - name: Slack Notification
