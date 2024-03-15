@@ -47,8 +47,8 @@ jobs:
         id: set
         run: |
           echo "${{ contains( github.repository, '/READ' ) && format('DEPLOYMENT {0} in {1}', \
-          contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', \
-          contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
+            contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED' , env.INPUT_ENV) || format('DEPLOYMENT {0} in {1} - {2}', \
+            contains(join(steps.*.outcome, ','), 'success') && 'SUCCESS' || 'FAILED', env.INPUT_ENV, env.INPUT_REGION) }}"
 
 
       - name: test composite action with inputs
