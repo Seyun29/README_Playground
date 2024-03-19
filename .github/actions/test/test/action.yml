@@ -6,7 +6,7 @@ runs:
     - name: update REGION & ECR_ID variable
       shell: bash
       run: |
-        if [ "${{ !contains( github.repository, '/README' ) }}" = "true" ]; then
+        if [ "${{ !contains( github.repository, '/rakuten' ) }}" = "true" ]; then
           echo "Not a MultiRegion Deployment, Skipping this step"
         elif [ "${{ env.INPUT_REGION }}" = "Tokyo" ]; then
           echo "REGION=ap-northeast-1" >> $GITHUB_ENV
