@@ -41,7 +41,6 @@ jobs:
       #test3 - /REAd & valid region -> normal case
       - name: Check Region Option for MultiRegion Deployment
         id: checkRegion
-        shell: bash
         run: |
           if [ "${{ !contains( github.repository, '/READ' ) }}" = "true" ]; then
             echo "Not a MultiRegion Deployment, Skipping this step"
@@ -51,6 +50,11 @@ jobs:
           else
             echo "start MultiRegion Deployment"
           fi
+          
+      - name: composite action test, set REGION
+        id: composite
+        uses: ./.github/actions/test/
+      
       # - name: check whether success
       #   if: always()
       #   shell: bash
