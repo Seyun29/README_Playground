@@ -53,7 +53,7 @@ jobs:
           
       - name: composite action test, set REGION
         id: composite
-        uses: ./.github/actions/test/
+        uses: ./.github/actions/test/test/
       
       # - name: check whether success
       #   if: always()
