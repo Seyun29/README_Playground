@@ -42,7 +42,7 @@ jobs:
       - name: Check Region Option for MultiRegion Deployment
         id: checkRegion
         run: |
-          if [ "${{ !contains( github.repository, '/READ' ) }}" = "true" ]; then
+          if [ "${{ contains( github.repository, '/READ' ) }}" = "true" ]; then
             echo "Not a MultiRegion Deployment, Skipping this step"
           elif [ "${{ env.INPUT_REGION }}" = "Skip" ]; then
             echo "Input Region is not given, Please select a region for MultiRegion Deployment and try again"
